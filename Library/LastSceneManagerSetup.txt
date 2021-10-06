@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Scenes/Game/FNaF4/gameScene_4.unity
+  isLoaded: 1
+  isActive: 1
