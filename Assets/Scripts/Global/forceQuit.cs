@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class forceQuit : MonoBehaviour {
 
 	void Update () {
-		if ((Input.GetKey(KeyCode.JoystickButton6)) && Input.GetKey(KeyCode.JoystickButton7) || (Input.GetKey(KeyCode.Q))){
+		if ((Input.GetKey(KeyCode.JoystickButton6) && Input.GetKey(KeyCode.JoystickButton4) && Input.GetKeyUp(KeyCode.JoystickButton5)) || (Input.GetKey(KeyCode.Q))){
 			Resources.UnloadUnusedAssets();
 			SceneManager.LoadSceneAsync("Launcher");
         }
