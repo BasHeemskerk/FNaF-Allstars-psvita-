@@ -27,6 +27,9 @@ public class lookScript_4 : MonoBehaviour {
 	public GameObject leftDoor;
 	public GameObject rightDoor;
 	public GameObject closetDoor;
+	public Animator _leftDoor;
+	public Animator _rightDoor;
+	public Animator _closetDoor;
 	public GameObject bed;
 
 	[Header("DoorSprites")]
@@ -129,6 +132,7 @@ public class lookScript_4 : MonoBehaviour {
 			if (_actualPosNames == "atLeft" || _actualPosNames == "atMiddle" || _actualPosNames == "atRight" || _actualPosNames == "atBed")
             {
 				Debug.Log("Cant do that now!");
+				whichStatus = 0;
 				yield break;
             }
 			else if (_actualPosNames == "lookingLeft")
@@ -156,7 +160,7 @@ public class lookScript_4 : MonoBehaviour {
 				yield return new WaitForSeconds(animTime + runTimeToAdd);
 				carpetAnim.SetActive(false);
 				closetDoor.SetActive(true);
-				doorSfx[0].Play();
+				//doorSfx[0].Play();
 				whichPos = 4;
 				whichStatus = 0;
 				yield break;
@@ -192,6 +196,7 @@ public class lookScript_4 : MonoBehaviour {
 			if (_actualPosNames == "atLeft" || _actualPosNames == "atMiddle" || _actualPosNames == "atRight")
 			{
 				Debug.Log("Cant do that now!");
+				whichStatus = 0;
 				yield break;
 			}
 			*/
@@ -234,6 +239,7 @@ public class lookScript_4 : MonoBehaviour {
 				doorSfx[1].Play();
 				yield return new WaitForSeconds(animTime + runTimeToAdd);
 				carpetAnim.SetActive(false);
+				flashLightSfx.Play();
 				whichPos = 0;
 				whichStatus = 0;
 				yield break;
@@ -248,9 +254,10 @@ public class lookScript_4 : MonoBehaviour {
 				closetDoor.SetActive(false);
 				carpetAnim.SetActive(true);
 				carpetSfx.Play();
-				doorSfx[1].Play();
+				//doorSfx[1].Play();
 				yield return new WaitForSeconds(animTime + runTimeToAdd);
 				carpetAnim.SetActive(false);
+				flashLightSfx.Play();
 				whichPos = 1;
 				whichStatus = 0;
 				yield break;
@@ -268,6 +275,7 @@ public class lookScript_4 : MonoBehaviour {
 				doorSfx[1].Play();
 				yield return new WaitForSeconds(animTime + runTimeToAdd);
 				carpetAnim.SetActive(false);
+				flashLightSfx.Play();
 				whichPos = 2;
 				whichStatus = 0;
 				yield break;
@@ -341,6 +349,86 @@ public class lookScript_4 : MonoBehaviour {
 		}
 	}
 
+	IEnumerator closeDoor()
+    {
+		if (_actualStatus == "animating")
+        {
+			Debug.Log("cant close doors now lel");
+			yield break;
+        }
+        else
+        {
+			whichStatus = 1;
+			if (_actualPosNames == "lookingLeft" || _actualPosNames == "lookingMiddle" || _actualPosNames == "lookingRight" || _actualPosNames == "atBed")
+            {
+				Debug.Log("No doors in sight");
+				whichStatus = 0;
+				yield break;
+            }
+			else if (_actualPosNames == "atLeft")
+            {
+				_leftDoor.SetTrigger("closeLeft");
+				doorSfx[3].Play();
+				yield return new WaitForSeconds(animTime);
+				whichStatus = 0;
+			}
+			else if (_actualPosNames == "atMiddle")
+			{
+                _closetDoor.SetTrigger("closeCloset");
+				doorSfx[2].Play();
+				yield return new WaitForSeconds(animTime);
+				whichStatus = 0;
+			}
+			else if (_actualPosNames == "atRight")
+			{
+				_rightDoor.SetTrigger("closeRight");
+				doorSfx[3].Play();
+				yield return new WaitForSeconds(animTime);
+				whichStatus = 0;
+			}
+		}
+    }
+
+	IEnumerator openDoor()
+	{
+		if (_actualStatus == "animating")
+		{
+			Debug.Log("cant open doors now lel");
+			yield break;
+		}
+		else
+		{
+			whichStatus = 1;
+			if (_actualPosNames == "lookingLeft" || _actualPosNames == "lookingMiddle" || _actualPosNames == "lookingRight" || _actualPosNames == "atBed")
+			{
+				Debug.Log("No doors in sight");
+				whichStatus = 0;
+				yield break;
+			}
+			else if (_actualPosNames == "atLeft")
+			{
+				_leftDoor.SetTrigger("openLeft");
+				doorSfx[0].Play();
+				yield return new WaitForSeconds(animTime);
+				whichStatus = 0;
+			}
+			else if (_actualPosNames == "atMiddle")
+			{
+				_closetDoor.SetTrigger("openCloset");
+				doorSfx[2].Play();
+				yield return new WaitForSeconds(animTime);
+				whichStatus = 0;
+			}
+			else if (_actualPosNames == "atRight")
+			{
+				_rightDoor.SetTrigger("openRight");
+				doorSfx[1].Play();
+				yield return new WaitForSeconds(animTime);
+				whichStatus = 0;
+			}
+		}
+	}
+
 
 	void Update () {
         if ((Input.GetKeyDown(KeyCode.JoystickButton11)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
@@ -359,8 +447,18 @@ public class lookScript_4 : MonoBehaviour {
         {
 			StartCoroutine(goBackwards());
         }
+		
+		
+		if ((Input.GetKeyDown(KeyCode.JoystickButton1)) || (Input.GetKeyDown(KeyCode.O)))
+        {
+			StartCoroutine(closeDoor());
+        }
+		else if ((Input.GetKeyUp(KeyCode.JoystickButton1)) || (Input.GetKeyUp(KeyCode.O)))
+        {
+			StartCoroutine(openDoor());
+		}
 
-		_actualStatus = status[whichStatus];
+			_actualStatus = status[whichStatus];
 		_actualAnimNames = animNames[whichAnims];
 		_actualPosNames = posNames[whichPos];
 
