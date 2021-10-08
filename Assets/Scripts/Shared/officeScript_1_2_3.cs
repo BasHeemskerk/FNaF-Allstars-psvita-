@@ -8,10 +8,10 @@ public class officeScript_1_2_3 : MonoBehaviour {
 	public Transform officeTransform;
 	public float moveSpeed;
 	public int[] camLimit;
+	public int[] currentLimit;
 
 	[Header("fnaf 3 only")]
 	public bool fnaf3;
-	public int[] currentLimit;
 	public GameObject consoleButton;
 	public GameObject cameraButton;
 
@@ -49,10 +49,11 @@ public class officeScript_1_2_3 : MonoBehaviour {
 		if (officeTransform.localPosition.x < camLimit[0]) officeTransform.localPosition = new Vector3(camLimit[0], officeTransform.localPosition.y, officeTransform.localPosition.z);
 		if (officeTransform.localPosition.x > camLimit[1]) officeTransform.localPosition = new Vector3(camLimit[1], officeTransform.localPosition.y, officeTransform.localPosition.z);
 
+		currentLimit[0] = (int)officeTransform.localPosition.x;
+		currentLimit[1] = (int)officeTransform.localPosition.x;
+
 		if (fnaf3)
         {
-			currentLimit[0] = (int)officeTransform.localPosition.x;
-			currentLimit[1] = (int)officeTransform.localPosition.x;
 			_fnaf3();
         }
 	}
