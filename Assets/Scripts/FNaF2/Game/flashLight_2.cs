@@ -54,17 +54,17 @@ public class flashLight_2 : MonoBehaviour {
 	void useLight () {
 		if ((Input.GetKeyDown(KeyCode.JoystickButton0)) || (Input.GetKeyDown(KeyCode.X)))
         {
-			if (_officeScript.currentLimit[1] == _officeScript.camLimit[1])
+			if (_officeScript.currentLimit == _officeScript.camLimit[1])
             {
 				Debug.Log("Left light on");
 				leftLightOn();
             }
-			else if (_officeScript.currentLimit[0] == _officeScript.camLimit[0])
+			else if (_officeScript.currentLimit == _officeScript.camLimit[0])
 			{
 				Debug.Log("Right light on");
 				rightLightOn();
 			}
-			else if ((_officeScript.currentLimit[0] > _officeScript.camLimit[0] - 175) && (_officeScript.currentLimit[1] < _officeScript.camLimit[1] + 175))
+			else if ((_officeScript.currentLimit > _officeScript.camLimit[0] + 50) && (_officeScript.currentLimit < _officeScript.camLimit[1] - 50))
 			{
 				Debug.Log("Middle light on");
 				middleLightOn();
