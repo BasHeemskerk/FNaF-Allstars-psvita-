@@ -28,10 +28,15 @@ public class phoneCall_1_2_3 : MonoBehaviour {
 
 	public void endCall()
     {
-
+		_endCall.SetActive(false);
+		inCall = false;
+		_callAudioSource.Stop();
     }
 	
 	void Update () {
-		
+		if ((Input.GetKeyDown(KeyCode.JoystickButton2) || Input.GetKeyDown(KeyCode.A)) && inCall)
+        {
+			endCall();
+        }
 	}
 }
