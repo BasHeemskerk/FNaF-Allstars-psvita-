@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Global\whichNight.cs" />
      <Compile Include="Assets\Scripts\Launcher\Selector.cs" />
      <Compile Include="Assets\Scripts\Shared\officeScript_1_2_3.cs" />
+     <Compile Include="Assets\Scripts\Shared\phoneCall_1_2_3.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>D:/Unity Projects/FNaF_AllStars_Vita/FNaF-Allstars-psvita-/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
